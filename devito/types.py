@@ -7,7 +7,6 @@ import sympy
 from operator import mul
 from functools import reduce
 
-from devito.arguments import ScalarArgProvider, ArrayArgProvider, ObjectArgProvider
 from devito.parameters import configuration
 from devito.tools import single_or
 
@@ -337,7 +336,7 @@ class SymbolicData(AbstractFunction):
         return
 
 
-class Scalar(Symbol, ScalarArgProvider):
+class Scalar(Symbol):
     """Symbolic object representing a scalar.
 
     :param name: Name of the symbol
@@ -360,7 +359,7 @@ class Scalar(Symbol, ScalarArgProvider):
         self.dtype = dtype or self.dtype
 
 
-class Array(SymbolicData, ArrayArgProvider):
+class Array(SymbolicData):
     """Symbolic object representing a tensor.
 
     :param name: Name of the symbol
@@ -444,7 +443,7 @@ class SymbolicFunction(AbstractFunction):
 # that need to be passed to external libraries
 
 
-class Object(ObjectArgProvider):
+class Object(object):
 
     """
     Represent a generic pointer object.
