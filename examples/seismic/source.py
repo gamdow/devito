@@ -8,7 +8,8 @@ try:
 except:
     plt = None
 
-__all__ = ['PointSource', 'Receiver', 'Shot', 'RickerSource', 'GaborSource']
+__all__ = ['PointSource', 'Receiver', 'Shot', 'RickerSource',
+           'GaborSource', 'WaveletSource']
 
 
 class PointSource(SparseFunction):

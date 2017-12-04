@@ -56,7 +56,7 @@ def plot_velocity(model, source=None, receiver=None, colorbar=True):
     extent = [model.origin[0], model.origin[0] + domain_size[0],
               model.origin[1] + domain_size[1], model.origin[1]]
 
-    plot = plt.imshow(np.transpose(model.vp), animated=True, cmap=cm.jet,
+    plot = plt.imshow(np.transpose(model.vp), animated=True, cmap=cm.RdBu,
                       vmin=np.min(model.vp), vmax=np.max(model.vp), extent=extent)
     plt.xlabel('X position (km)')
     plt.ylabel('Depth (km)')
