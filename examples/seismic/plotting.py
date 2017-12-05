@@ -1,4 +1,5 @@
 import numpy as np
+from collections import Mapping
 try:
     import matplotlib as mpl
     import matplotlib.pyplot as plt
@@ -43,7 +44,8 @@ def plot_perturbation(model, model1, colorbar=True):
     plt.show()
 
 
-def plot_velocity(model, source=None, receiver=None, colorbar=True):
+def plot_velocity(model, source=None, receiver=None, colorbar=True,
+                  cmap=cm.RdBu):
     """
     Plot a two-dimensional velocity field from a seismic :class:`Model`
     object. Optionally also includes point markers for sources and receivers.
@@ -51,12 +53,14 @@ def plot_velocity(model, source=None, receiver=None, colorbar=True):
     :param model: :class:`Model` object that holds the velocity model.
     :param source: Coordinates of the source point.
     :param receiver: Coordinates of the receiver points.
+    :param cmap: Colormap that defines the color scheme of the plot.
+    :param colorbar: Flag to add colorbar to the plot.
     """
     domain_size = 1.e-3 * np.array(model.domain_size)
     extent = [model.origin[0], model.origin[0] + domain_size[0],
               model.origin[1] + domain_size[1], model.origin[1]]
 
-    plot = plt.imshow(np.transpose(model.vp), animated=True, cmap=cm.RdBu,
+    plot = plt.imshow(np.transpose(model.vp), animated=True, cmap=cmap,
                       vmin=np.min(model.vp), vmax=np.max(model.vp), extent=extent)
     plt.xlabel('X position (km)')
     plt.ylabel('Depth (km)')
@@ -130,4 +134,27 @@ def plot_image(data, vmin=None, vmax=None, colorbar=True, cmap="gray"):
         divider = make_axes_locatable(ax)
         cax = divider.append_axes("right", size="5%", pad=0.05)
         plt.colorbar(plot, cax=cax)
+    plt.show()
+
+
+def plot_seismogram(data, time, title=None):
+    """
+    Plot a wavelet signature for the specified data.
+
+    :param data: Data that defines the wave signal; either a
+                 single array or a dict mapping name to values.
+    :param time: Discretized values of the time axis
+    """
+    plt.figure()
+    if isinstance(data, Mapping):
+        for lbl, signal in data.items():
+            plt.plot(time, signal, label=lbl)
+        plt.legend()
+    else:
+        plt.plot(time, data)
+    if title:
+        plt.title(title)
+    plt.xlabel('Time (ms)')
+    plt.ylabel('Amplitude')
+    plt.tick_params()
     plt.show()

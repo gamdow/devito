@@ -446,7 +446,7 @@ class Model(object):
             self.m.data = 1 / vp**2
 
     def pad(self, data):
-        """Padding function PNL layers in every direction for for the
+        """Padding function PML layers in every direction for for the
         absorbing boundary conditions.
 
         :param data : Data array to be padded"""

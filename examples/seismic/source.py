@@ -1,6 +1,7 @@
 from devito import Dimension
 from devito.function import SparseFunction
 from devito.logger import error
+from examples.seismic.plotting import plot_seismogram
 
 import numpy as np
 try:
@@ -96,22 +97,14 @@ class WaveletSource(PointSource):
         """
         raise NotImplementedError('Wavelet not defined')
 
-    def show(self, idx=0, time=None, wavelet=None):
+    def show(self, idx=0):
         """
         Plot the wavelet of the specified source.
 
         :param idx: Index of the source point for which to plot wavelet
-        :param wavelet: Prescribed wavelet instead of one from this symbol
-        :param time: Prescribed time instead of time from this symbol
         """
-        wavelet = wavelet or self.data[:, idx]
-        time = time or self.time
-        plt.figure()
-        plt.plot(time, wavelet)
-        plt.xlabel('Time (ms)')
-        plt.ylabel('Amplitude')
-        plt.tick_params()
-        plt.show()
+        plot_seismogram(self.data[:, idx], self.time,
+                        title='Source Time Function')
 
 
 class RickerSource(WaveletSource):
