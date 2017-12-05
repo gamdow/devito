@@ -81,7 +81,7 @@ def ForwardOperator(model, source, receiver, time_order=2, space_order=4,
                    npoint=receiver.npoint)
 
     # Get computational time-step value
-    dt = model.critical_dt * (1.73 if time_order == 4 else 1.0)
+    dt = model.grid.time_dim.spacing * (1.73 if time_order == 4 else 1.0)
 
     s = model.grid.stepping_dim.spacing
     eqn = iso_stencil(u, time_order, m, s, damp)
